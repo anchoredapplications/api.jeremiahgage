@@ -140,7 +140,7 @@ Resources:
     Type: AWS::ECS::Service
     Properties:
       # rename after first deploy
-      ServiceName: aws-ecs-jeremiahgage-sv
+      ServiceName: aws-ecs-jeremiahgage-svc
       Cluster: !Ref Cluster
       TaskDefinition: !Ref TaskDefinition
       DesiredCount: 1
