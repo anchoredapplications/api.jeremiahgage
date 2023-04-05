@@ -125,7 +125,7 @@ Resources:
         - Name: aws-ecs-jeremiahgage-container
           # Image: nginx:1.17.7
           # REPLACE WITH YOUR ACCOUNT NUMBER AND REGION
-          Image: 452158465117.dkr.ecr.us-east-2.amazonaws.com/aws-ecs-jeremiahgage-api
+          # Image: 452158465117.dkr.ecr.us-east-2.amazonaws.com/aws-ecs-jeremiahgage-api
           PortMappings:
             - ContainerPort: 8080
           LogConfiguration:
