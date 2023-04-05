@@ -57,7 +57,7 @@ async function GetGitHubDocumentsByDocument(documentPath) {
 }
 
 async function LoadGitHubDocumentsByDocument(documentPath) {
-    const response = await octokit.request(process.env.REACT_APP_GITHUB_API_URL + documentPath);
+    const response = await octokit.request(process.env.GITHUB_API_URL + documentPath);
     
     const documents = []
     for (let file of response.data) {
@@ -72,7 +72,7 @@ async function LoadGitHubDocumentsByDocument(documentPath) {
 }
 
 async function LoadGitHubRepositories() {
-    const response = await octokit.request(process.env.REACT_APP_GITHUB_API_URL + process.env.GITHUB_API_REPOS_URL)
+    const response = await octokit.request(process.env.GITHUB_API_URL + process.env.GITHUB_API_REPOS_URL)
     const repositories = response.data
     
     GITHUB_REPOSITORIES.value = repositories
