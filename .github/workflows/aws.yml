@@ -103,5 +103,5 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.update-task-def.outputs.task-definition }}
-        service: aws-ecs-jeremiahgage-service
+        service: aws-ecs-jeremiahgage-svc
         cluster: aws-ecs-jeremiahgage-api
