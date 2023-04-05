@@ -6,18 +6,20 @@ const { Experiences } = require("./handlers/experience")
 const { Skills } = require("./handlers/skills")
 const { Academia } = require("./handlers/academia")
 const { Decorations } = require("./handlers/decorations")
+const { Information } = require("./handlers/information")
 
 module.exports = {
     POST: [
-        {route: "/api/email/send", handler: (req, res) => SendIfReCaptcha(req, res, SendEmail, Error400)},
-        {route: "/api/github/documents", handler: GitHubDocumentsByDocument},
+        {route: "/email/send", handler: (req, res) => SendIfReCaptcha(req, res, SendEmail, Error400)},
+        {route: "/github/documents", handler: GitHubDocumentsByDocument},
     ],
     GET: [
-        {route: "/api/github/languages", handler: GitHubLanguages},
-        {route: "/api/github/projects", handler: GitHubProjects},
-        {route: "/api/me/experiences", handler: Experiences},
-        {route: "/api/me/skills", handler: Skills},
-        {route: "/api/me/academia", handler: Academia},
-        {route: "/api/me/decorations", handler: Decorations},
+        {route: "/github/languages", handler: GitHubLanguages},
+        {route: "/github/projects", handler: GitHubProjects},
+        {route: "/me/experiences", handler: Experiences},
+        {route: "/me/skills", handler: Skills},
+        {route: "/me/academia", handler: Academia},
+        {route: "/me/decorations", handler: Decorations},
+        {route: "/me/info", handler: Information},
     ]
 }
