@@ -1,14 +1,16 @@
 const PORT = 8080;
 const express = require("express")
 const cors = require("cors")
-const axios = require("axios")
 const routing = require("./routing")
+const bodyParser = require("body-parser")
 
 require('dotenv').config()
 
 const app = express();
-app.use(cors())
-app.use(express.json())
+app.use(cors({ exposedHeaders: ['*', 'token'] }));
+app.options('*', cors());
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 routing.GET.forEach(({route, handler}) => {
     app.get(route, handler);
