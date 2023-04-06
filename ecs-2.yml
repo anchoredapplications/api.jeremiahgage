@@ -33,14 +33,14 @@ Resources:
     Properties:
       MinCapacity: 1
       MaxCapacity: 2
-      ResourceId: service/aws-ecs-jeremiahgage-api/aws-ecs-jeremiahgage-svc
+      ResourceId: service/aws-ecs-firegate-api/aws-ecs-firegate-svc
       ScalableDimension: ecs:service:DesiredCount
       ServiceNamespace: ecs
       RoleARN: !GetAtt AutoScalingRole.Arn
   ApiScalingPolicyCPU:
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     Properties:
-      PolicyName: aws-ecs-jeremiahgage-api-svc-cpu
+      PolicyName: aws-ecs-firegate-api-svc-cpu
       PolicyType: TargetTrackingScaling
       ScalingTargetId: !Ref AutoScalingTarget
       TargetTrackingScalingPolicyConfiguration:
@@ -52,7 +52,7 @@ Resources:
   ApiScalingPolicyMemory:
     Type: AWS::ApplicationAutoScaling::ScalingPolicy
     Properties:
-      PolicyName: aws-ecs-jeremiahgage-api-svc-memory
+      PolicyName: aws-ecs-firegate-api-svc-memory
       PolicyType: TargetTrackingScaling
       ScalingTargetId: !Ref AutoScalingTarget
       TargetTrackingScalingPolicyConfiguration:
@@ -64,15 +64,15 @@ Resources:
   Cluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: aws-ecs-jeremiahgage-api
+      ClusterName: aws-ecs-firegate-api
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: aws-ecs-jeremiahgage-api-group
+      LogGroupName: aws-ecs-firegate-api-group
   ExecutionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: aws-ecs-jeremiahgage-api-role
+      RoleName: aws-ecs-firegate-api-role
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -115,17 +115,17 @@ Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: aws-ecs-jeremiahgage-task
+      Family: aws-ecs-firegate-task
       Cpu: 256
       Memory: 512
       NetworkMode: awsvpc
       ExecutionRoleArn: !Ref ExecutionRole
       TaskRoleArn: !Ref TaskRole
       ContainerDefinitions:
-        - Name: aws-ecs-jeremiahgage-container
+        - Name: aws-ecs-firegate-container
           # Image: nginx:1.17.7
           # REPLACE WITH YOUR ACCOUNT NUMBER AND REGION
-          Image: 452158465117.dkr.ecr.us-east-2.amazonaws.com/aws-ecs-jeremiahgage-api
+          Image: 452158465117.dkr.ecr.us-east-2.amazonaws.com/aws-ecs-firegate-api
           PortMappings:
             - ContainerPort: 8080
           LogConfiguration:
@@ -136,6 +136,27 @@ Resources:
               awslogs-stream-prefix: ecs
       RequiresCompatibilities:
         - FARGATE
+  Service:
+    Type: AWS::ECS::Service
+    Properties:
+      # rename after first deploy
+      ServiceName: aws-ecs-firegate-service
+      Cluster: !Ref Cluster
+      TaskDefinition: !Ref TaskDefinition
+      DesiredCount: 1
+      LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          Subnets:
+            - !Ref Subnet1ID
+            - !Ref Subnet2ID
+          SecurityGroups:
+            - !GetAtt ContainerSecurityGroup.GroupId
+      LoadBalancers:
+        - TargetGroupArn: !Ref TargetGroup
+          ContainerPort: 8080
+          ContainerName: aws-ecs-firegate-container
   LoadBalancerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -153,7 +174,7 @@ Resources:
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
-      Name: aws-ecs-jeremiahgage-alb
+      Name: aws-ecs-firegate-alb
       Subnets:
         - !Ref Subnet1ID
         - !Ref Subnet2ID
@@ -195,7 +216,7 @@ Resources:
     DependsOn: LoadBalancer
     Properties:
       TargetType: ip
-      Name: aws-ecs-jeremiahgage-tg
+      Name: aws-ecs-firegate-tg
       Port: 8080
       Protocol: HTTP
       VpcId: !Ref VPCID
@@ -211,7 +232,7 @@ Resources:
       ResourceRecords:
         - !GetAtt LoadBalancer.DNSName
 
-# aws cloudformation update-stack --stack-name aws-ecs-jeremiahgage-api --template-body file://./ecs-2.yml --capabilities CAPABILITY_NAMED_IAM \
+# aws cloudformation update-stack --stack-name aws-ecs-firegate-api --template-body file://./ecs-2.yml --capabilities CAPABILITY_NAMED_IAM \
 # --parameters ParameterKey=VPCID,ParameterValue=YOUR_VPC_ID \
 # ParameterKey=Subnet1ID,ParameterValue=YOUR_SUBNET_1_ID \
 # ParameterKey=Subnet2ID,ParameterValue=YOUR_SUBNET_2_ID \

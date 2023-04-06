@@ -20,15 +20,15 @@ Resources:
   Cluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: aws-ecs-jeremiahgage-api
+      ClusterName: aws-ecs-firegate-api
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: aws-ecs-jeremiahgage-api-group
+      LogGroupName: aws-ecs-firegate-api-group
   ExecutionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: aws-ecs-jeremiahgage-api-role
+      RoleName: aws-ecs-firegate-api-role
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -67,14 +67,14 @@ Resources:
   TaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: aws-ecs-jeremiahgage-task
+      Family: aws-ecs-firegate-task
       Cpu: 256
       Memory: 512
       NetworkMode: awsvpc
       ExecutionRoleArn: !Ref ExecutionRole
       TaskRoleArn: !Ref TaskRole
       ContainerDefinitions:
-        - Name: aws-ecs-jeremiahgage-container
+        - Name: aws-ecs-firegate-container
           Image: nginx:1.17.7
           PortMappings:
             - ContainerPort: 80
@@ -89,7 +89,7 @@ Resources:
   Service:
     Type: AWS::ECS::Service
     Properties:
-      ServiceName: aws-ecs-jeremiahgage-svc
+      ServiceName: aws-ecs-firegate-svc
       Cluster: !Ref Cluster
       TaskDefinition: !Ref TaskDefinition
       DesiredCount: 1
@@ -119,7 +119,7 @@ Resources:
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
-      Name: aws-ecs-jeremiahgage-api-alb
+      Name: aws-ecs-firegate-api-alb
       Subnets:
         - !Ref Subnet1ID
         - !Ref Subnet2ID
