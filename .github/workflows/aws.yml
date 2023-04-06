@@ -51,7 +51,11 @@ jobs:
     steps:
     - name: 'Update env file'
       run: |
-        echo "${{ secrets.ENV }}" > .env
+        touch .env
+        echo GITHUB_SITE_AUTH=${{ secrets.API_GITHUB_SITE_AUTH }} >> .env
+        echo GOOGLE_RECAPTCHA_SECRET_KEY=${{ secrets.GOOGLE_RECAPTCHA_SECRET_KEY }} >> .env
+        echo NODE_ENV=${{ variables.NODE_ENV }} >> .env
+        cat .env
 
     - name: Checkout
       uses: actions/checkout@v3
