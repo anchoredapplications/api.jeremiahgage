@@ -6,4 +6,4 @@ RUN npm install pm2 -g
 RUN npm install -g nodemon
 COPY . .
 EXPOSE 8080
-CMD ["nodemon", "./src/index.js"]
+CMD ["pm2-runtime", "./src/index.js"]
