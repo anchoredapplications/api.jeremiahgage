@@ -17,10 +17,12 @@ routing.POST.forEach(({route, handler}) => {
     app.post(route, handler);
 });
 
-app.listen(PORT, ()=>console.log(`Listening on port ${PORT}...`))
+app.listen(PORT, ()=>{ 
+    console.log(`Listening on port ${PORT}...`) 
+    console.log(`ENV: ${process.env.NODE_ENV}`)
+})
 
 if (process.env.NODE_ENV === 'production') {
-    console.log("PRODUCTION")
     process.on('SIGINT', () => {
       server.close(() => {
         // close database
