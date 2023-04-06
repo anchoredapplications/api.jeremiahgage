@@ -2,7 +2,7 @@ FROM node:lts-alpine
 ENV NODE_ENV=production
 WORKDIR /usr/app
 COPY package*.json ./
-RUN npm install cors dotenv axios express body-parser
+RUN npm install cors dotenv axios express
 RUN npm install pm2 -g
 RUN npm install -g nodemon
 COPY . .
