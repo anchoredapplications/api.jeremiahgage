@@ -18,3 +18,13 @@ routing.POST.forEach(({route, handler}) => {
 });
 
 app.listen(PORT, ()=>console.log(`Listening on port ${PORT}...`))
+
+if (process.env.NODE_ENV === 'production') {
+    process.on('SIGINT', () => {
+      server.close(() => {
+        // close database
+        console.log("Anchor: Process closed by SIGINT")
+        process.exit(0);
+      });
+    });
+}
