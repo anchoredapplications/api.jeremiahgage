@@ -1,5 +1,5 @@
 FROM node:lts-alpine
-ENV ENV=production
+ENV NODE_ENV=production
 WORKDIR /usr/app
 COPY package*.json ./
 RUN npm install cors dotenv axios express
