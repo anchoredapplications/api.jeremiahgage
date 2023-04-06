@@ -20,6 +20,6 @@ module.exports = {
         {route: "/me/skills", handler: Skills},
         {route: "/me/academia", handler: Academia},
         {route: "/me/decorations", handler: Decorations},
-        {route: "/me/info", handler: Information},
+        {route: "/info", handler: Information},
     ]
 }
