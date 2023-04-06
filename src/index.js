@@ -18,7 +18,7 @@ routing.POST.forEach(({route, handler}) => {
     app.post(route, handler);
 });
 
-app.listen(PORT, ()=>{ 
+const server = app.listen(PORT, ()=>{ 
     console.log(`Listening on port ${PORT}...`) 
     console.log(`ENV: ${process.env.NODE_ENV}`)
 })
