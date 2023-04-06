@@ -6,5 +6,5 @@ RUN npm install cors dotenv axios express
 RUN npm install pm2 -g
 RUN npm install -g nodemon
 COPY . .
-EXPOSE 80
+EXPOSE 8080
 CMD ["pm2-runtime", "./src/index.js"]
