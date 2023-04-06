@@ -136,27 +136,6 @@ Resources:
               awslogs-stream-prefix: ecs
       RequiresCompatibilities:
         - FARGATE
-  Service:
-    Type: AWS::ECS::Service
-    Properties:
-      # rename after first deploy
-      ServiceName: aws-ecs-jeremiahgage-service
-      Cluster: !Ref Cluster
-      TaskDefinition: !Ref TaskDefinition
-      DesiredCount: 1
-      LaunchType: FARGATE
-      NetworkConfiguration:
-        AwsvpcConfiguration:
-          AssignPublicIp: ENABLED
-          Subnets:
-            - !Ref Subnet1ID
-            - !Ref Subnet2ID
-          SecurityGroups:
-            - !GetAtt ContainerSecurityGroup.GroupId
-      LoadBalancers:
-        - TargetGroupArn: !Ref TargetGroup
-          ContainerPort: 8080
-          ContainerName: aws-ecs-jeremiahgage-container
   LoadBalancerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -196,6 +175,7 @@ Resources:
      LoadBalancerArn: !Ref LoadBalancer
      Port: 80
      Protocol: "HTTP"
+
   HTTPSLoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     DependsOn: LoadBalancer
@@ -209,6 +189,7 @@ Resources:
       SslPolicy: "ELBSecurityPolicy-2016-08"
       Certificates: 
       - CertificateArn: !Ref ACMCertificate
+  
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     DependsOn: LoadBalancer
@@ -218,6 +199,7 @@ Resources:
       Port: 8080
       Protocol: HTTP
       VpcId: !Ref VPCID
+  
   ApiDomain:
     Type: AWS::Route53::RecordSet
     DependsOn: LoadBalancer

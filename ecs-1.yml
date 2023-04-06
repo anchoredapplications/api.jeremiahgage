@@ -89,7 +89,7 @@ Resources:
   Service:
     Type: AWS::ECS::Service
     Properties:
-      ServiceName: aws-ecs-jeremiahgage-service
+      ServiceName: aws-ecs-jeremiahgage-svc
       Cluster: !Ref Cluster
       TaskDefinition: !Ref TaskDefinition
       DesiredCount: 1
