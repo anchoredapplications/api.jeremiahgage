@@ -49,6 +49,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: 'Update env file'
+        run: |
+          echo "${{ secrets.ENV }}" > .env
+
     - name: Checkout
       uses: actions/checkout@v3
 

@@ -196,7 +196,6 @@ Resources:
      LoadBalancerArn: !Ref LoadBalancer
      Port: 80
      Protocol: "HTTP"
-
   HTTPSLoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     DependsOn: LoadBalancer
@@ -210,7 +209,6 @@ Resources:
       SslPolicy: "ELBSecurityPolicy-2016-08"
       Certificates: 
       - CertificateArn: !Ref ACMCertificate
-  
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     DependsOn: LoadBalancer
@@ -220,7 +218,6 @@ Resources:
       Port: 8080
       Protocol: HTTP
       VpcId: !Ref VPCID
-  
   ApiDomain:
     Type: AWS::Route53::RecordSet
     DependsOn: LoadBalancer
