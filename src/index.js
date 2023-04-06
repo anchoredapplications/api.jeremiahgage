@@ -11,6 +11,10 @@ app.options('*', cors());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 
+app.get('/', async (req, res) => {
+    return res.send({ error: false, v: 1,});
+});
+
 routing.GET.forEach(({route, handler}) => {
     app.get(route, handler);
 });
