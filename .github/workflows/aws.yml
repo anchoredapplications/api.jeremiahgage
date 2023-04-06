@@ -50,8 +50,8 @@ jobs:
 
     steps:
     - name: 'Update env file'
-        run: |
-          echo "${{ secrets.ENV }}" > .env
+      run: |
+        echo "${{ secrets.ENV }}" > .env
 
     - name: Checkout
       uses: actions/checkout@v3
