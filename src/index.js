@@ -12,6 +12,8 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 
 app.get('/', async (req, res) => {
+    console.log(`Routing`) 
+
     return res.send({ error: false, v: 1,});
 });
 
