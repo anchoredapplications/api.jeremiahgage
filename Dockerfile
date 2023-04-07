@@ -1,9 +1,9 @@
 FROM node:lts-alpine
 ENV NODE_ENV=production
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY package*.json .
+RUN npm install
+COPY ./ .
 EXPOSE 8080
-
-COPY package*.json ./
-RUN npm install cors dotenv axios express pm2 -g
-RUN npm install nodemon -g
-COPY . .
-CMD ["make", "up-prod"]
+CMD ["npm", "build"]
