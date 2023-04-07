@@ -1,5 +1,35 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Codespaces
+Marketplace
+Explore
+ 
+@JeremiahDuane 
+rahulpatilgit
+/
+demo-deploy
+Public
+Fork your own copy of rahulpatilgit/demo-deploy
+Code
+Issues
+Pull requests
+Actions
+Projects
+Security
+Insights
+demo-deploy/.github/workflows/aws.yml
+@rahulpatilgit
+rahulpatilgit Update aws.yml
+Latest commit 182f350 on Sep 18, 2022
+ History
+ 1 contributor
+93 lines (84 sloc)  4.39 KB
+ 
+
 # This workflow will build and push a new container image to Amazon ECR,
-# and then will deploy a new task definition to Amazon ECS, when there is a push to the "master" branch.
+# and then will deploy a new task definition to Amazon ECS, when there is a push to the "main" branch.
 #
 # To use this workflow, you will need to complete the following set-up steps:
 #
@@ -28,43 +58,36 @@ name: Deploy to Amazon ECS
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - "main"
 
 env:
-  AWS_REGION: us-east-2                  # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: jeremiahgage_api_repo           # set this to your Amazon ECR repository name
-  ECS_SERVICE: jeremiahgage_api_service                # set this to your Amazon ECS service name
-  ECS_CLUSTER: jeremiahgage_api_cluster                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: ./aws.json # set this to the path to your Amazon ECS task definition
-                                               # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: jeremiahgage_api_deploy           # set this to the name of the container in the
+  AWS_REGION: us-east-1                  # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: api_jeremiahgage_repo         # set this to your Amazon ECR repository name
+  ECS_SERVICE: api_jeremiahgage                # set this to your Amazon ECS service name
+  ECS_CLUSTER: api_jeremiahgage                 # set this to your Amazon ECS cluster name
+  ECS_TASK_DEFINITION: .github/workflows/task-definition.json      # set this to the path to your Amazon ECS task definition                                           # file, e.g. .aws/task-definition.json
+  CONTAINER_NAME: api_jeremiahgage           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
 
 permissions:
-  contents: read
-   
+  id-token: write
+  contents: read # This is required for actions/checkout@v2
+
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
-    - name: 'Update env file'
-      run: |
-        touch .env
-        echo GITHUB_SITE_AUTH=${{ secrets.API_GITHUB_SITE_AUTH }} >> .env
-        echo GOOGLE_RECAPTCHA_SECRET_KEY=${{ secrets.GOOGLE_RECAPTCHA_SECRET_KEY }} >> .env
-        echo NODE_ENV=${{ secrets.NODE_ENV }} >> .env
-        cat .env
-
     - name: Checkout
       uses: actions/checkout@v3
-
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        role-to-assume: ########################### # Update the ARN of the IAM role
+        role-session-name: Github
         aws-region: ${{ env.AWS_REGION }}
 
     - name: Login to Amazon ECR
@@ -74,42 +97,27 @@ jobs:
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
       env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: aws-ecs-jeremiahgage-api
-          IMAGE_TAG: aws-ecs-jeremiahgage-api-${{ github.sha }}
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-
-    - name: Push image to Amazon ECR
-      id: push-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: aws-ecs-jeremiahgage-api
-        IMAGE_TAG: aws-ecs-jeremiahgage-api-${{ github.sha }}
-      run: |
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-
-    - name: Download task definition
-      run: aws ecs describe-task-definition --task-definition aws-ecs-jeremiahgage-task --query taskDefinition > task-definition.json
-
     - name: Fill in the new image ID in the Amazon ECS task definition
-      id: update-task-def
+      id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: task-definition.json
-        container-name: aws-ecs-jeremiahgage-container
-        image: ${{ steps.push-image.outputs.image }}
+        task-definition: ${{ env.ECS_TASK_DEFINITION }}
+        container-name: ${{ env.CONTAINER_NAME }}
+        image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
-      id: deploy-task-def
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
-        task-definition: ${{ steps.update-task-def.outputs.task-definition }}
-        service: aws-ecs-jeremiahgage-service
-        cluster: aws-ecs-jeremiahgage-api
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: ${{ env.ECS_SERVICE }}
+        cluster: ${{ env.ECS_CLUSTER }}
+        wait-for-service-stability: true
