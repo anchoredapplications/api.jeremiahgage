@@ -1,9 +1,9 @@
 {
-    "family": "jeremiahgage",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-2:452158465117:task-definition/jeremiahgage:17",
     "containerDefinitions": [
         {
             "name": "jeremiahgage",
-            "image": "452158465117.dkr.ecr.us-east-2.amazonaws.com/jeremiahgage:latest",
+            "image": "452158465117.dkr.ecr.us-east-2.amazonaws.com/jeremiahgage:daeae20863f175cee3637d79e49ebcfc3e4718a2",
             "cpu": 0,
             "portMappings": [
                 {
@@ -12,13 +12,27 @@
                     "hostPort": 80,
                     "protocol": "tcp",
                     "appProtocol": "http"
+                },
+                {
+                    "name": "jeremiahgage-8080-tcp",
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                },
+                {
+                    "name": "jeremiahgage-443-tcp",
+                    "containerPort": 443,
+                    "hostPort": 443,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
                 }
             ],
             "essential": true,
             "environment": [],
-            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
+            "workingDirectory": "/usr/src/app",
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -30,9 +44,50 @@
             }
         }
     ],
+    "family": "jeremiahgage",
     "taskRoleArn": "arn:aws:iam::452158465117:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::452158465117:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
+    "revision": 17,
+    "volumes": [],
+    "status": "ACTIVE",
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "ecs.capability.execution-role-awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        },
+        {
+            "name": "ecs.capability.execution-role-ecr-pull"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+        },
+        {
+            "name": "ecs.capability.task-eni"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+        }
+    ],
+    "placementConstraints": [],
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
     "requiresCompatibilities": [
         "FARGATE"
     ],
@@ -41,5 +96,8 @@
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    }
+    },
+    "registeredAt": "2023-04-07T21:35:17.575Z",
+    "registeredBy": "arn:aws:iam::452158465117:root",
+    "tags": []
 }
