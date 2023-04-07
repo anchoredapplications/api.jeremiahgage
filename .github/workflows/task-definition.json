@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "jeremiahgage",
-            "image": "452158465117.dkr.ecr.us-east-2.amazonaws.com/jeremiahgage:latest",
+            "image": "452158465117.dkr.ecr.us-east-2.amazonaws.com/jeremiahgage:prod",
             "cpu": 0,
             "portMappings": [
                 {
