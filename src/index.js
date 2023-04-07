@@ -6,10 +6,9 @@ const routing = require("./routing")
 require('dotenv').config()
 
 const app = express();
-app.use(cors({ exposedHeaders: ['*', 'token'] }));
-app.options('*', cors());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
+app.use(cors())
 
 app.get('/', (req, res) => {
     console.log(`Routing`) 
@@ -27,6 +26,7 @@ routing.POST.forEach(({route, handler}) => {
 const server = app.listen(PORT, ()=>{ 
     console.log(`Listening on port ${PORT}...`) 
     console.log(`ENV: ${process.env.NODE_ENV}`)
+    console.log(new Date())
 })
 
 if (process.env.NODE_ENV === 'production') {
