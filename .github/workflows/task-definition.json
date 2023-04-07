@@ -1,5 +1,6 @@
 {
     "taskDefinitionArn": "arn:aws:ecs:us-east-2:452158465117:task-definition/jeremiahgage:2",
+    "family": "jeremiahgage",
     "containerDefinitions": [
         {
             "name": "jeremiahgage",
