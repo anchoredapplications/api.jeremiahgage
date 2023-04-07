@@ -1,5 +1,4 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-2:452158465117:task-definition/jeremiahgage:2",
     "family": "jeremiahgage",
     "containerDefinitions": [
         {
@@ -30,5 +29,17 @@
                 }
             }
         }
-    ]
+    ],
+    "taskRoleArn": "arn:aws:iam::452158465117:role/ecsTaskExecutionRole",
+    "executionRoleArn": "arn:aws:iam::452158465117:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "3072",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    }
 }
