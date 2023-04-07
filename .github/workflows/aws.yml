@@ -6,28 +6,6 @@ Codespaces
 Marketplace
 Explore
  
-@JeremiahDuane 
-rahulpatilgit
-/
-demo-deploy
-Public
-Fork your own copy of rahulpatilgit/demo-deploy
-Code
-Issues
-Pull requests
-Actions
-Projects
-Security
-Insights
-demo-deploy/.github/workflows/aws.yml
-@rahulpatilgit
-rahulpatilgit Update aws.yml
-Latest commit 182f350 on Sep 18, 2022
- History
- 1 contributor
-93 lines (84 sloc)  4.39 KB
- 
-
 # This workflow will build and push a new container image to Amazon ECR,
 # and then will deploy a new task definition to Amazon ECS, when there is a push to the "main" branch.
 #
@@ -62,12 +40,12 @@ on:
       - "main"
 
 env:
-  AWS_REGION: us-east-1                  # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: api_jeremiahgage_repo         # set this to your Amazon ECR repository name
-  ECS_SERVICE: api_jeremiahgage_service_01                # set this to your Amazon ECS service name
-  ECS_CLUSTER: api_jeremiahgage                 # set this to your Amazon ECS cluster name
+  AWS_REGION: us-east-2                  # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: jeremiahgage         # set this to your Amazon ECR repository name
+  ECS_SERVICE: jeremiahgage                # set this to your Amazon ECS service name
+  ECS_CLUSTER: jeremiahgage                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .github/workflows/task-definition.json      # set this to the path to your Amazon ECS task definition                                           # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: api_jeremiahgage           # set this to the name of the container in the
+  CONTAINER_NAME: jeremiahgage           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
 
 permissions:
