@@ -6,4 +6,4 @@ COPY package.json .
 RUN npm install nodemon -g
 COPY ./ .
 EXPOSE 8080
-CMD ["npm","build"]
+CMD ["npm","start"]
