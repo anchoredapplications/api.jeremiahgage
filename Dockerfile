@@ -6,4 +6,4 @@ COPY package*.json ./
 RUN npm install cors dotenv axios express pm2 -g
 RUN npm install nodemon -g
 COPY . .
-CMD ["nodemon", "./src/index.js"]
+CMD ["make", "up-prod"]
