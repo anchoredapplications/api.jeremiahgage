@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - ./:/usr/app
+      - ./:/app
     container_name: node-express-docker
     expose:
       - "8080" 
