@@ -58,11 +58,9 @@ jobs:
         touch .env
         echo NODE_VERSION="production" >> .env
         echo VERSION_NUMBER=${{ secrets.VERSION_NUMBER }} >> .env
-#       Removing the key subjects users to IP limits. 
-#       echo GITHUB_SITE_AUTH=${{ secrets.API_GITHUB_SITE_AUTH }} >> .env
         echo GOOGLE_RECAPTCHA_SECRET_KEY=${{ secrets.GOOGLE_RECAPTCHA_SECRET_KEY }} >> .env
         cat .env
-        
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
