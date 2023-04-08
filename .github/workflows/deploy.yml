@@ -48,7 +48,8 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     environment: production
-
+    
+    steps:
     - name: 'Create env file'
       run: |
         touch .env
@@ -59,7 +60,6 @@ jobs:
         echo GOOGLE_RECAPTCHA_SECRET_KEY=${{ secrets.GOOGLE_RECAPTCHA_SECRET_KEY }} >> .env
         cat .env
 
-    steps:
     - name: Checkout
       uses: actions/checkout@v3
 
