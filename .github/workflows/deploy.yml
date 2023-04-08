@@ -33,11 +33,11 @@ on:
 env:
   AWS_REGION: us-east-2                  # set this to your preferred AWS region, e.g. us-west-1
   ECR_REPOSITORY: jeremiahgage         # set this to your Amazon ECR repository name
-  ECS_SERVICE: jeremiahgage                # set this to your Amazon ECS service name
+  ECS_SERVICE: api-jeremiahgage-balanced-sg-service                # set this to your Amazon ECS service name
   ECS_CLUSTER: jeremiahgage                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: .github/workflows/task-definition.json      # set this to the path to your Amazon ECS task definition                                           # file, e.g. .aws/task-definition.json
   
-  CONTAINER_NAME: jeremiahgage           # set this to the name of the container in the
+  CONTAINER_NAME: api-jeremiahgage-deploy           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
 
 permissions:
@@ -48,6 +48,16 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     environment: production
+
+    - name: 'Create env file'
+      run: |
+        touch .env
+        echo NODE_VERSION="production" >> .env
+        echo VERSION_NUMBER=${{ secrets.VERSION_NUMBER }} >> .env
+#       Removing the key subjects users to IP limits. 
+#       echo GITHUB_SITE_AUTH=${{ secrets.API_GITHUB_SITE_AUTH }} >> .env
+        echo GOOGLE_RECAPTCHA_SECRET_KEY=${{ secrets.GOOGLE_RECAPTCHA_SECRET_KEY }} >> .env
+        cat .env
 
     steps:
     - name: Checkout
@@ -68,7 +78,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}
+        IMAGE_TAG: production
       run: |
         # Build a docker container and
         # push it to ECR so that it can

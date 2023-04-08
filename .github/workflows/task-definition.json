@@ -1,13 +1,13 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:us-east-2:452158465117:task-definition/jeremiahgage:17",
+    "taskDefinitionArn": "arn:aws:ecs:us-east-2:452158465117:task-definition/api-jeremiahgage-tasks:1",
     "containerDefinitions": [
         {
-            "name": "jeremiahgage",
-            "image": "452158465117.dkr.ecr.us-east-2.amazonaws.com/jeremiahgage:prod",
+            "name": "api-jeremiahgage-deploy",
+            "image": "452158465117.dkr.ecr.us-east-2.amazonaws.com/jeremiahgage:production",
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "jeremiahgage-8080-tcp",
+                    "name": "api-jeremiahgage-8080-tcp",
                     "containerPort": 8080,
                     "hostPort": 8080,
                     "protocol": "tcp",
@@ -30,11 +30,11 @@
             }
         }
     ],
-    "family": "jeremiahgage",
+    "family": "api-jeremiahgage-tasks",
     "taskRoleArn": "arn:aws:iam::452158465117:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::452158465117:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 17,
+    "revision": 1,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -83,7 +83,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2023-04-07T21:35:17.575Z",
+    "registeredAt": "2023-04-08T02:50:19.251Z",
     "registeredBy": "arn:aws:iam::452158465117:root",
     "tags": []
 }

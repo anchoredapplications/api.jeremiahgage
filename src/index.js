@@ -10,12 +10,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 app.use(cors())
 
-app.get('/', (req, res) => {
-    console.log(`Routing`) 
-    res.status(200);
-    res.json({ error: false, v: 1,});
-});
-
 routing.GET.forEach(({route, handler}) => {
     app.get(route, handler);
 });
