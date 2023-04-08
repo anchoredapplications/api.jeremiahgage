@@ -63,7 +63,7 @@ jobs:
       run: |
         touch .env
         echo NODE_VERSION="production" >> .env
-        echo VERSION_NUMBER=${{ secrets.VERSION_NUMBER }} >> .env
+        echo SECRETS_POPULATED=${{ secrets.SECRETS_POPULATED }} >> .env
         echo GOOGLE_RECAPTCHA_SECRET_KEY=${{ secrets.GOOGLE_RECAPTCHA_SECRET_KEY }} >> .env
         cat .env
         

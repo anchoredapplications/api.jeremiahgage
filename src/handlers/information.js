@@ -3,7 +3,7 @@ require('dotenv').config()
 
 function Information(request, response) {    
     response.status(200);
-    response.json({ date: new Date(), version: process.env.VERSION_NUMBER})
+    response.json({ date: new Date(), secrets_populated: process.env.SECRETS_POPULATED})
 }
 
 module.exports = { Information };
