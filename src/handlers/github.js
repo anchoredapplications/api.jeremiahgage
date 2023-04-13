@@ -2,7 +2,7 @@ const { Octokit } = require("octokit");
 require('dotenv').config()
 
 const octokit = new Octokit({
-    auth: process.env.GITHUB_SITE_AUTH
+    auth: process.env.API_GITHUB_SITE_AUTH
 });
 
 //STATE VARIABLES
