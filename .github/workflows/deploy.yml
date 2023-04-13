@@ -24,11 +24,6 @@
 #    See the documentation for each action used below for the recommended IAM policies for this IAM user,
 #    and best practices on handling the access key credentials.
 #
-#
-# DEV NOTES
-#
-#       Removing the key FROM .ENV FILE subjects users to IP limits. 
-#       echo GITHUB_SITE_AUTH=${{ secrets.API_GITHUB_SITE_AUTH }} >> .env
 
 name: Deploy to Amazon ECS
 
