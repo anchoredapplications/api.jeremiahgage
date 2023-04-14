@@ -61,6 +61,9 @@ jobs:
         echo SECRETS_POPULATED=${{ secrets.SECRETS_POPULATED }} >> .env
         echo GOOGLE_RECAPTCHA_SECRET_KEY=${{ secrets.GOOGLE_RECAPTCHA_SECRET_KEY }} >> .env
         echo API_GITHUB_SITE_AUTH=${{ secrets.API_GITHUB_SITE_AUTH }} >> .env
+        echo SES_RECIPIENT_ADDRESS=${{ secrets.SES_RECIPIENT_ADDRESS }} >> .env
+        echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
+        echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
         cat .env
         
     - name: Configure AWS credentials
