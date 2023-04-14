@@ -30,7 +30,7 @@ async function SendEmail(request, response) {
         ReplyToAddresses: [
             data.email
         ], 
-        Source: SES_SENDER_ADDRESS
+        Source: process.env.SES_SENDER_ADDRESS
     };
 
     const client = new SESClient(config);
