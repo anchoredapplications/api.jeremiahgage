@@ -2,10 +2,10 @@ const axios = require("axios")
 require('dotenv').config()
 
 async function SendIfReCaptcha(request, response, ifSuccess, ifFail) {
-    if (request.body && request.body.token || true) {
+    if (request.body && request.body.token) {
         const isHuman = await ValidateReCaptcha(request.body.token)
 
-        if (isHuman || true) {
+        if (isHuman) {
             return ifSuccess(request, response)
         }
     } 
